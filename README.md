@@ -143,40 +143,12 @@ The VideoDB Director Agent provides comprehensive video processing and agent coo
 - Handle video format conversions and optimizations
 - Manage video storage and retrieval operations
 
-### Agent Communication
-- Coordinate communication between multiple agents
-- Handle mentions and message routing between agents
-- Maintain conversation threads and context
-- Facilitate agent-to-agent collaboration
-
-### Text Messaging
-- Send and receive text messages between agents
-- Manage message threading and conversation flow
-- Handle message formatting and delivery
-- Support real-time messaging capabilities
-
-### Multi-Agent Orchestration
-- Wait for and respond to agent mentions
-- Execute coordinated workflows across multiple agents
-- Maintain agent state and conversation context
-- Handle error scenarios and recovery
-
 ### Video Streaming Management
 - Manage video streaming sessions
 - Handle streaming quality and bandwidth optimization
 - Support multiple streaming protocols
 - Monitor streaming performance and metrics
 
-## Agent Workflow
-
-The VideoDB Director Agent follows a specific workflow pattern:
-
-1. **Wait for Mentions**: Continuously monitors for mentions from other agents
-2. **Process Instructions**: Analyzes incoming messages and determines required actions
-3. **Execute Tools**: Calls appropriate VideoDB and Coral tools to fulfill requests
-4. **Coordinate Responses**: Manages communication flow between agents
-5. **Error Handling**: Provides graceful error handling and recovery
-6. **Loop Continuation**: Returns to monitoring for new mentions
 
 ## Example
 
