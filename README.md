@@ -1,73 +1,205 @@
-# Coral VideoDB Director Agent
+# [VideoDB Director Agent](https://github.com/Coral-Protocol/Coral-VideoDbDirector-Agent)
 
-A Python-based agent that facilitates communication between AI agents using Coral Server and provides video processing capabilities through VideoDB.
+VideoDB Director Agent is a specialized agent for managing video streaming, text messaging, and coordinating communication between agents within the Coral Protocol ecosystem. It provides comprehensive video processing capabilities and seamless agent-to-agent communication through the VideoDB MCP tools.
 
-## Features
+## Responsibility
+VideoDB Director Agent acts as the primary interface for video processing and agent coordination within multi-agent workflows. It handles video streaming operations, text message management, and facilitates communication between different agents in the Coral Protocol network, enabling seamless integration of video services into automated multi-agent systems.
 
-- Agent-to-agent communication via Coral Server MCP protocol
-- Video processing and streaming capabilities through VideoDB
-- Real-time mention-based messaging system
-- Asynchronous task execution with error handling
+## Details
+- **Framework**: LangChain
+- **Tools used**: VideoDB MCP Tools, Coral MCP Tools
+- **AI model**: GPT-4.1-mini, supports configurable LLM providers
+- **Date added**: January 2025
+- **License**: MIT
 
-## Prerequisites
+## Setup the Agent
 
-- Python 3.12+
-- UV package manager
-- Access to Coral Server
-- VideoDB API access
-- OpenAI API access
+### 1. Clone & Install Dependencies
 
-## Setup
+<details>  
 
-1. **Clone and initialize the project:**
-   ```bash
-   uv sync
-   ```
-
-2. **Create a `.env` file with the following variables:**
-   ```bash
-   # Coral Server Configuration
-   coral_base_url=http://localhost:8080/api/v1/mcp
-   
-   # LLM Configuration
-   llm_model_name=gpt-4o-mini
-   llm_model_provider=openai
-   OPENAI_API_KEY=your_openai_api_key_here
-   
-   # VideoDB Configuration
-   VIDEODB_API_KEY=your_videodb_api_key_here
-   ```
-
-3. **Install VideoDB MCP server (if not already installed):**
-   ```bash
-   pipx install videodb-director-mcp
-   ```
-
-## Usage
-
-Run the agent:
 ```bash
-uv run python Coral-VideoDB-Director-Agent.py
+# In a new terminal clone the repository:
+git clone https://github.com/Coral-Protocol/Coral-VideoDbDirector-Agent.git
+
+# Navigate to the project directory:
+cd Coral-VideoDbDirector-Agent
+
+# Install `uv`:
+pip install uv
+
+# Install dependencies from `pyproject.toml` using `uv`:
+uv sync
 ```
 
-The agent will:
-1. Connect to Coral Server and VideoDB
-2. Wait for mentions from other agents
-3. Process instructions and execute appropriate tools
-4. Respond back with results or error messages
+</details>
 
-## Architecture
+### 2. Configure Environment Variables
 
-- **Coral Tools**: Handle agent communication (threads, messages, mentions)
-- **VideoDB Tools**: Handle video processing and streaming operations
-- **LLM Integration**: Uses OpenAI models for intelligent task processing
-- **Error Handling**: Comprehensive error handling with automatic retries
+Get the required credentials:
+- [OpenAI API Key](https://platform.openai.com/api-keys) or other LLM provider
+- [VideoDB API Key](https://videodb.io/) for video processing services
 
-## Dependencies
+<details>
 
-- `langchain-mcp-adapters==0.0.10`: MCP protocol integration
-- `python-dotenv`: Environment variable management
-- `langchain>=0.2.0`: LLM framework
-- `langchain-openai>=0.1.0`: OpenAI integration
+```bash
+# Create .env file in project root
+cp -r env.example .env
+```
 
+Required environment variables:
+- `OPENAI_API_KEY`: Your LLM provider API key
+- `coral_base_url`: Coral server SSE endpoint URL
+- `VIDEODB_API_KEY`: VideoDB platform API key for video processing
 
+Optional environment variables:
+- `MODEL_NAME`: LLM model name (default: "gpt-4o")
+- `MODEL_PROVIDER`: LLM provider (default: "openai")
+
+</details>
+
+## Run the Agent
+
+You can run in either of the below modes to get your system running.  
+
+- The Executable Model is part of the Coral Protocol Orchestrator which works with [Coral Studio UI](https://github.com/Coral-Protocol/coral-studio).  
+- The Dev Mode allows the Coral Server and all agents to be separately running on each terminal without UI support.  
+
+### 1. Executable Mode
+
+Checkout: [How to Build a Multi-Agent System with Awesome Open Source Agents using Coral Protocol](https://github.com/Coral-Protocol/existing-agent-sessions-tutorial-private-temp) and update the file: `coral-server/src/main/resources/application.yaml` with the details below, then run the [Coral Server](https://github.com/Coral-Protocol/coral-server) and [Coral Studio UI](https://github.com/Coral-Protocol/coral-studio). You do not need to set up the `.env` in the project directory for running in this mode; it will be captured through the variables below.
+
+<details>
+
+For Linux or MAC:
+
+```bash
+# PROJECT_DIR="/PATH/TO/YOUR/PROJECT"
+
+applications:
+  - id: "app"
+    name: "VideoDB Director Application"
+    description: "Video processing and agent coordination agent for streaming and messaging operations"
+    privacyKeys:
+      - "default-key"
+      - "public"
+      - "priv"
+
+registry:
+  videodb-director-agent:
+    options:
+      - name: "OPENAI_API_KEY"
+        type: "string"
+        description: "API key for the LLM service"
+      - name: "VIDEODB_API_KEY"
+        type: "string"
+        description: "VideoDB platform API key"
+    runtime:
+      type: "executable"
+      command: ["bash", "-c", "${PROJECT_DIR}/run_agent.sh main.py"]
+      environment:
+        - name: "OPENAI_API_KEY"
+          from: "OPENAI_API_KEY"
+        - name: "VIDEODB_API_KEY"
+          from: "VIDEODB_API_KEY"
+        - name: "MODEL_NAME"
+          value: "gpt-4.1-mini"
+        - name: "MODEL_PROVIDER"
+          value: "openai"
+        - name: "MODEL_TOKEN"
+          value: "4000"
+        - name: "MODEL_TEMPERATURE"
+          value: "0.3"
+
+```
+
+For Windows, create a powershell command (run_agent.ps1) and run:
+
+```bash
+command: ["powershell","-ExecutionPolicy", "Bypass", "-File", "${PROJECT_DIR}/run_agent.ps1","main.py"]
+```
+
+</details>
+
+### 2. Dev Mode
+
+Ensure that the [Coral Server](https://github.com/Coral-Protocol/coral-server) is running on your system and run below command in a separate terminal.
+
+<details>
+
+```bash
+# Run the agent using `uv`:
+uv run main.py
+```
+</details>
+
+## Capabilities
+
+The VideoDB Director Agent provides comprehensive video processing and agent coordination capabilities:
+
+### Video Processing
+- Stream video content through VideoDB platform
+- Process video files and manage video metadata
+- Handle video format conversions and optimizations
+- Manage video storage and retrieval operations
+
+### Agent Communication
+- Coordinate communication between multiple agents
+- Handle mentions and message routing between agents
+- Maintain conversation threads and context
+- Facilitate agent-to-agent collaboration
+
+### Text Messaging
+- Send and receive text messages between agents
+- Manage message threading and conversation flow
+- Handle message formatting and delivery
+- Support real-time messaging capabilities
+
+### Multi-Agent Orchestration
+- Wait for and respond to agent mentions
+- Execute coordinated workflows across multiple agents
+- Maintain agent state and conversation context
+- Handle error scenarios and recovery
+
+### Video Streaming Management
+- Manage video streaming sessions
+- Handle streaming quality and bandwidth optimization
+- Support multiple streaming protocols
+- Monitor streaming performance and metrics
+
+## Agent Workflow
+
+The VideoDB Director Agent follows a specific workflow pattern:
+
+1. **Wait for Mentions**: Continuously monitors for mentions from other agents
+2. **Process Instructions**: Analyzes incoming messages and determines required actions
+3. **Execute Tools**: Calls appropriate VideoDB and Coral tools to fulfill requests
+4. **Coordinate Responses**: Manages communication flow between agents
+5. **Error Handling**: Provides graceful error handling and recovery
+6. **Loop Continuation**: Returns to monitoring for new mentions
+
+## Example
+
+<details>
+
+```bash
+# Input from orchestrating agent:
+"Watch the <Youtube URL> video and give a summary about it in bullet points"
+
+# VideoDB Director Agent Response:
+✅ Successfully initiated video streaming for 'presentation.mp4'
+📋 Streaming Details:
+   - URL: https://stream.videodb.io/presentation-12345
+   - Status: Active
+   - Quality: HD (1080p)
+   
+📤 Message sent to user agent with streaming information.
+Streaming session is ready for viewing.
+
+```
+</details>
+
+## Creator Details
+- **Name**: Mustafa Khan
+- **Affiliation**: Coral Protocol
+- **Contact**: [Discord](https://discord.com/invite/Xjm892dtt3)

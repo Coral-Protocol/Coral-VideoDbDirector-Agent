@@ -8,7 +8,7 @@ from langchain.agents import create_tool_calling_agent, AgentExecutor
 
 load_dotenv()
 
-coral_base_url = os.getenv('coral_base_url')
+coral_base_url = os.getenv('CORAL_SSE_URL')
 coral_params = {
     "waitForAgents": 1,
     "agentId": "videodb-director",
@@ -52,9 +52,9 @@ async def create_agent(coral_tools, agent_tools):
     ])
 
     model = init_chat_model(
-            model=os.getenv('llm_model_name'),
-            model_provider=os.getenv('llm_model_provider'),
-            api_key=os.getenv("OPENAI_API_KEY"),
+            model=os.getenv('MODEL_NAME', 'gpt-4.1-mini'),
+            model_provider=os.getenv('MODEL_PROVIDER', 'openai'),
+            api_key=os.getenv("API_KEY"),
             temperature=0.3,
             max_tokens=16000
         )
