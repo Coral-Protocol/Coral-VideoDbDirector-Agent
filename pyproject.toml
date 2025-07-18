@@ -1,0 +1,12 @@
+[project]
+name = "videodb"
+version = "0.1.0"
+description = "Coral VideoDB Director Agent for agent-to-agent communication and video processing"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain-mcp-adapters==0.0.10",
+    "python-dotenv>=1.0.0",
+    "langchain>=0.2.0",
+    "langchain-openai>=0.1.0",
+]
