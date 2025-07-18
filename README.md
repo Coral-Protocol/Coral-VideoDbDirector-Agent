@@ -1,15 +1,15 @@
 # [VideoDB Director Agent](https://github.com/Coral-Protocol/Coral-VideoDbDirector-Agent)
 
-VideoDB Director Agent is a specialized agent for managing video streaming, text messaging, and coordinating communication between agents within the Coral Protocol ecosystem. It provides comprehensive video processing capabilities and seamless agent-to-agent communication through the VideoDB MCP tools.
+VideoDB Director Agent is a specialized AI agent that processes, analyzes, and extracts insights from video content using advanced AI capabilities. It can watch videos, translate video content, generate summaries, extract key moments, answer questions about video content, and provide detailed analysis through natural language interactions within the Coral Protocol ecosystem.
 
 ## Responsibility
-VideoDB Director Agent acts as the primary interface for video processing and agent coordination within multi-agent workflows. It handles video streaming operations, text message management, and facilitates communication between different agents in the Coral Protocol network, enabling seamless integration of video services into automated multi-agent systems.
+VideoDB Director Agent serves as an intelligent video content analyzer and processor that can understand, interpret, and respond to queries about video content. It handles video watching, transcription, summarization, question answering, and content analysis tasks. The agent processes video URLs (YouTube, local files, etc.), extracts meaningful information, and provides comprehensive insights through natural language responses, making video content accessible and searchable through conversational AI interactions.
 
 ## Details
 - **Framework**: LangChain
 - **Tools used**: VideoDB MCP Tools, Coral MCP Tools
 - **AI model**: GPT-4.1-mini, supports configurable LLM providers
-- **Date added**: January 2025
+- **Date added**: July 2025
 - **License**: MIT
 
 ## Setup the Agent
@@ -49,12 +49,13 @@ cp -r env.example .env
 
 Required environment variables:
 - `OPENAI_API_KEY`: Your LLM provider API key
-- `coral_base_url`: Coral server SSE endpoint URL
 - `VIDEODB_API_KEY`: VideoDB platform API key for video processing
 
 Optional environment variables:
 - `MODEL_NAME`: LLM model name (default: "gpt-4o")
 - `MODEL_PROVIDER`: LLM provider (default: "openai")
+- `MODEL_TOKEN`: Max tokens (default: "4000")
+- `MODEL_TEMPERATURE`: Model temperature (default: "0.3")
 
 </details>
 
@@ -135,20 +136,27 @@ uv run main.py
 
 ## Capabilities
 
-The VideoDB Director Agent provides comprehensive video processing and agent coordination capabilities:
+The VideoDB Director Agent provides comprehensive video content analysis and processing capabilities:
 
-### Video Processing
-- Stream video content through VideoDB platform
-- Process video files and manage video metadata
-- Handle video format conversions and optimizations
-- Manage video storage and retrieval operations
+### Video Content Analysis
+- Watch and process videos from YouTube URLs, local files, and other sources
+- Transcribe speech and audio content from videos
+- Generate comprehensive summaries of video content
+- Extract key moments and important segments from videos
+- Answer specific questions about video content and context
 
-### Video Streaming Management
-- Manage video streaming sessions
-- Handle streaming quality and bandwidth optimization
-- Support multiple streaming protocols
-- Monitor streaming performance and metrics
+### AI-Powered Video Understanding
+- Analyze video content using advanced AI models
+- Provide detailed insights and explanations about video topics
+- Generate bullet-point summaries and structured content analysis
+- Identify and describe key themes, topics, and concepts in videos
+- Process long-form video content with intelligent summarization
 
+### Intelligent Content Extraction
+- Identify and summarize key points from video presentations
+- Extract important quotes and statements from video content
+- Generate structured summaries with main topics and subtopics
+- Provide detailed analysis of video content with context and explanations
 
 ## Example
 
@@ -159,14 +167,24 @@ The VideoDB Director Agent provides comprehensive video processing and agent coo
 "Watch the <Youtube URL> video and give a summary about it in bullet points"
 
 # VideoDB Director Agent Response:
-✅ Successfully initiated video streaming for 'presentation.mp4'
-📋 Streaming Details:
-   - URL: https://stream.videodb.io/presentation-12345
-   - Status: Active
-   - Quality: HD (1080p)
+✅ Successfully processed video: "Introduction to AI and Machine Learning"
+📋 Video Analysis Summary:
+   - Duration: 45 minutes
+   - Main Topic: Artificial Intelligence Fundamentals
    
-📤 Message sent to user agent with streaming information.
-Streaming session is ready for viewing.
+📝 Key Points:
+   • AI is a branch of computer science focused on creating intelligent machines
+   • Machine learning is a subset of AI that enables systems to learn from data
+   • Three main types of ML: supervised, unsupervised, and reinforcement learning
+   • Deep learning uses neural networks to process complex patterns
+   • Current applications include image recognition, natural language processing, and autonomous vehicles
+   
+🎯 Key Insights:
+   - The video emphasizes the practical applications of AI in modern technology
+   - Discusses the evolution from rule-based systems to data-driven approaches
+   - Highlights the importance of ethical considerations in AI development
+   
+📤 Analysis complete and ready for further processing or agent collaboration.
 
 ```
 </details>
