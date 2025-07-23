@@ -34,4 +34,4 @@ source "$VENV_ACTIVATE" || { echo "Error: Failed to activate virtual environment
  
 # Run Python script
 echo "Running $PYTHON_SCRIPT..."
-uv run "$PYTHON_SCRIPT" || { echo "Error: Failed to run $PYTHON_SCRIPT" >&2; exit 1; }
+/home/mustafa/.local/bin/uv run "$PYTHON_SCRIPT" || { echo "Error: Failed to run $PYTHON_SCRIPT" >&2; exit 1; }
